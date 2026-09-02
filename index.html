@@ -2,46 +2,466 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>inchigor</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#090a0d">
+  <meta name="description" content="inchigor — privacy, self-hosting, crypto and small useful tools.">
+  <title>inchigor</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <style>
+    :root {
+      --bg: #090a0d;
+      --panel: rgba(19, 22, 29, .66);
+      --panel-strong: rgba(15, 17, 22, .88);
+      --text: #f3f6fb;
+      --muted: #9da7b6;
+      --line: rgba(255,255,255,.09);
+      --accent: #86a9ff;
+      --accent-2: #9d7cff;
+      --max: 1120px;
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0e0e11;
-      color: #eaeaea;
+      color: var(--text);
+      background: var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; }
+
+    .ambient {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(77, 106, 255, .18), transparent 30%),
+        radial-gradient(circle at 80% 30%, rgba(154, 90, 255, .15), transparent 28%),
+        radial-gradient(circle at 60% 85%, rgba(27, 126, 255, .12), transparent 34%),
+        linear-gradient(180deg, #0b0d12 0%, #08090c 55%, #0a0c10 100%);
+    }
+
+    .orb {
+      position: absolute;
+      width: 38vw;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: .28;
+      animation: drift 16s ease-in-out infinite alternate;
+      background: linear-gradient(135deg, #4969ff, #a05dff);
+    }
+    .orb.one { left: -12vw; top: 12vh; }
+    .orb.two {
+      right: -15vw;
+      top: 48vh;
+      animation-delay: -7s;
+      animation-duration: 20s;
+      background: linear-gradient(135deg, #6a48ff, #2e8dff);
+    }
+
+    .grid {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      opacity: .16;
+      background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), transparent 80%);
+      pointer-events: none;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      opacity: .035;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+    }
+
+    @keyframes drift {
+      from { transform: translate3d(0, 0, 0) scale(1); }
+      to { transform: translate3d(7vw, -5vh, 0) scale(1.16); }
+    }
+
+    nav {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      width: min(calc(100% - 28px), 720px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px 10px 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(8, 10, 14, .58);
+      backdrop-filter: blur(18px) saturate(140%);
+      box-shadow: 0 16px 50px rgba(0,0,0,.18);
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: -.03em;
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 6px; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 14px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      transition: .2s ease;
+    }
+    .nav-links a:hover { color: var(--text); background: rgba(255,255,255,.06); }
+
+    main { width: min(calc(100% - 32px), var(--max)); margin: 0 auto; }
+
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 120px 0 72px;
+    }
+
+    .hero-inner { max-width: 900px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #bcc6d5;
+      background: rgba(255,255,255,.025);
+      font-size: 13px;
+      letter-spacing: .02em;
+    }
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #7ea0ff;
+      box-shadow: 0 0 18px #7ea0ff;
+    }
+
+    h1 {
+      margin: 24px 0 18px;
+      font-size: clamp(4.8rem, 15vw, 10.5rem);
+      line-height: .82;
+      letter-spacing: -.075em;
+      font-weight: 760;
+    }
+
+    .gradient-text {
+      background: linear-gradient(100deg, #ffffff 8%, #cbd7ff 48%, #a992ff 95%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      margin: 0 auto;
+      max-width: 690px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2.1vw, 1.35rem);
+      line-height: 1.65;
+    }
+
+    .hero-actions {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      text-decoration: none;
+      color: #dfe6f3;
+      background: rgba(255,255,255,.035);
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.15); }
+    .btn.primary { background: #eff3ff; color: #0a0c10; border-color: transparent; }
+
+    .scroll-cue {
+      margin-top: 62px;
+      color: #707b8d;
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    section { padding: 100px 0; }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 32px;
+      margin-bottom: 34px;
+      align-items: start;
+    }
+    .kicker {
+      color: #717c8f;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: 12px;
+      padding-top: 9px;
+    }
+    .section-title {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4.1rem);
+      line-height: 1.05;
+      letter-spacing: -.045em;
+      max-width: 760px;
+    }
+
+    .about-grid, .project-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.018));
+      backdrop-filter: blur(14px);
+      padding: 26px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
+    }
+
+    .bio { grid-column: span 7; min-height: 270px; }
+    .stack { grid-column: span 5; }
+    .wide { grid-column: span 12; }
+
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 1.35rem;
+      letter-spacing: -.02em;
+    }
+    .card p { margin: 0; color: var(--muted); line-height: 1.7; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 11px;
+      color: #c7d0dd;
+      background: rgba(255,255,255,.025);
+      font-size: 13px;
+    }
+
+    .project {
+      grid-column: span 6;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+    }
+    .project:hover {
+      transform: translateY(-4px);
+      border-color: rgba(154, 177, 255, .26);
+      background: linear-gradient(180deg, rgba(102,124,255,.08), rgba(255,255,255,.02));
+    }
+    .project .arrow { font-size: 1.4rem; color: #aab8d0; }
+    .project small { color: #748096; text-transform: uppercase; letter-spacing: .12em; }
+
+    .links {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .social {
+      text-decoration: none;
       display: flex;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
+      justify-content: space-between;
+      min-height: 110px;
+      transition: transform .2s ease, border-color .2s ease;
     }
-    .card {
-      text-align: center;
-      max-width: 420px;
-      padding: 24px;
+    .social:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.18); }
+    .social span:last-child { color: #738097; }
+
+    footer {
+      padding: 80px 0 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #697487;
+      font-size: 13px;
     }
-    h1 {
-      margin-bottom: 8px;
-      font-size: 2rem;
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(34px) scale(.985);
+      transition: opacity .75s cubic-bezier(.2,.7,.2,1), transform .75s cubic-bezier(.2,.7,.2,1);
     }
-    p {
-      opacity: 0.8;
-      line-height: 1.4;
+    .reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
+
+    @media (max-width: 760px) {
+      nav { top: 10px; }
+      .nav-links a:nth-child(2) { display: none; }
+      h1 { font-size: clamp(4.4rem, 25vw, 7rem); }
+      .section-head { grid-template-columns: 1fr; gap: 12px; }
+      .bio, .stack, .project { grid-column: span 12; }
+      .links { grid-template-columns: 1fr; }
+      section { padding: 76px 0; }
+      footer { flex-direction: column; align-items: flex-start; gap: 10px; }
     }
-    a {
-      color: #7aa2ff;
-      text-decoration: none;
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>inchigor</h1>
-    <p>digital identity</p>
-    <p>
-      contact: telegram @inchigor
-    </p>
+  <div class="ambient" aria-hidden="true">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
   </div>
+  <div class="grid" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+
+  <nav>
+    <a class="brand" href="#top">inchigor</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#elsewhere">Elsewhere</a>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero">
+      <div class="hero-inner">
+        <div class="eyebrow reveal"><span class="dot"></span> personal corner of the internet</div>
+        <h1 class="gradient-text reveal">inchigor</h1>
+        <p class="hero-copy reveal">Support, privacy, self-hosting and crypto. I build small tools, run my own infrastructure and keep the parts of the internet I care about a little more under my control.</p>
+        <div class="hero-actions reveal">
+          <a class="btn primary" href="#projects">Selected projects ↓</a>
+          <a class="btn" href="https://github.com/inchigor" target="_blank" rel="noreferrer">GitHub ↗</a>
+        </div>
+        <div class="scroll-cue reveal">scroll to explore</div>
+      </div>
+    </header>
+
+    <section id="about">
+      <div class="section-head reveal">
+        <div class="kicker">01 / About</div>
+        <h2 class="section-title">Less platform dependence. More useful things that stay understandable.</h2>
+      </div>
+
+      <div class="about-grid">
+        <article class="card bio reveal">
+          <h3>What I do</h3>
+          <p>I work around Web3 support and communities, investigate technical cases, follow on-chain activity and turn recurring problems into clearer processes. Outside work I spend too much time on privacy, self-custody, open source and small self-hosted systems.</p>
+        </article>
+
+        <article class="card stack reveal">
+          <h3>Things I care about</h3>
+          <div class="chips">
+            <span class="chip">Bitcoin</span>
+            <span class="chip">Monero</span>
+            <span class="chip">Privacy</span>
+            <span class="chip">Self-hosting</span>
+            <span class="chip">Self-custody</span>
+            <span class="chip">DeFi</span>
+            <span class="chip">Open source</span>
+            <span class="chip">macOS</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-head reveal">
+        <div class="kicker">02 / Projects</div>
+        <h2 class="section-title">Small tools that solved an actual problem first.</h2>
+      </div>
+
+      <div class="project-grid">
+        <a class="card project reveal" href="https://github.com/inchigor/post-editor" target="_blank" rel="noreferrer">
+          <div>
+            <small>Web tool</small>
+            <h3>Post Editor</h3>
+            <p>A lightweight browser editor for preparing social posts with emoji helpers, previews and local autosave.</p>
+          </div>
+          <div class="arrow">↗</div>
+        </a>
+
+        <a class="card project reveal" href="https://github.com/inchigor/ZwsCleanerTool" target="_blank" rel="noreferrer">
+          <div>
+            <small>Utility</small>
+            <h3>ZWS Cleaner Tool</h3>
+            <p>A tiny utility for cleaning invisible zero-width characters from text before they become someone else's debugging problem.</p>
+          </div>
+          <div class="arrow">↗</div>
+        </a>
+      </div>
+    </section>
+
+    <section id="elsewhere">
+      <div class="section-head reveal">
+        <div class="kicker">03 / Elsewhere</div>
+        <h2 class="section-title">Other places where I leave traces.</h2>
+      </div>
+
+      <div class="links">
+        <a class="card social reveal" href="https://github.com/inchigor" target="_blank" rel="noreferrer"><span>GitHub</span><span>↗</span></a>
+        <a class="card social reveal" href="https://x.com/inchigor" target="_blank" rel="noreferrer"><span>X / Twitter</span><span>↗</span></a>
+        <a class="card social reveal" href="https://t.me/inchigor" target="_blank" rel="noreferrer"><span>Telegram</span><span>↗</span></a>
+      </div>
+    </section>
+
+    <footer>
+      <span>© <span id="year"></span> inchigor</span>
+      <span>Built without a framework, analytics or trackers.</span>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach((el, index) => {
+      el.style.transitionDelay = `${Math.min(index % 4, 3) * 70}ms`;
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>
