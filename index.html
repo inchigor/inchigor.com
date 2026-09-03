@@ -84,17 +84,10 @@
     .chips{display:grid;grid-template-columns:repeat(4,max-content);gap:9px;margin-top:18px}
     .chip{border:1px solid var(--line);border-radius:999px;padding:8px 11px;color:#c7d0dd;background:rgba(255,255,255,.025);font-size:13px}
 
-    .project{grid-column:span 6;min-height:220px;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;isolation:isolate;transition:transform .32s cubic-bezier(.16,.78,.2,1),border-color .3s ease,background .3s ease,box-shadow .3s ease}
+    .project{grid-column:span 4;min-height:220px;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;isolation:isolate;transition:transform .32s cubic-bezier(.16,.78,.2,1),border-color .3s ease,background .3s ease,box-shadow .3s ease}
     .project:hover{transform:translateY(-7px) scale(1.008);border-color:rgba(154,177,255,.30);background:linear-gradient(180deg,rgba(102,124,255,.090),rgba(255,255,255,.023));box-shadow:0 30px 64px rgba(0,0,0,.17)}
     .project .arrow{font-size:1.4rem;color:#aab8d0;transition:transform .28s ease,color .28s ease}.project:hover .arrow{transform:translate(5px,-5px);color:#e1e7f4}
     .project small{color:#748096;text-transform:uppercase;letter-spacing:.12em}
-    .project.featured{grid-column:span 12;min-height:340px;display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);padding:0}
-    .project-feature-copy{min-width:0;padding:32px;display:flex;flex-direction:column;justify-content:space-between}
-    .project-feature-copy p{max-width:470px}
-    .project-shot{position:relative;min-height:300px;margin:14px 14px 14px 0;border:1px solid rgba(255,255,255,.10);border-radius:18px;overflow:hidden;background:#0a0c11;box-shadow:0 18px 42px rgba(0,0,0,.22)}
-    .project-shot::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.025)}
-    .project-shot img{width:100%;height:100%;display:block;object-fit:cover;object-position:left top;transition:transform .48s cubic-bezier(.16,.78,.2,1)}
-    .project.featured:hover .project-shot img{transform:scale(1.018)}
 
     .daily-grid,.radar-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
     .tool-card,.radar-card{min-height:188px;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;transition:transform .30s cubic-bezier(.16,.78,.2,1),border-color .28s ease,background .28s ease,box-shadow .28s ease}
@@ -131,7 +124,7 @@
 
     @media(max-width:900px){
       h1{font-size:clamp(3.5rem,10vw,6.4rem)}.section-title{font-size:clamp(2.2rem,6.6vw,3.8rem)}
-      .project.featured{grid-template-columns:1fr}.project-feature-copy{padding:26px}.project-shot{min-height:0;aspect-ratio:16/10;margin:0 14px 14px}
+      .project{grid-column:span 6}.project:first-child{grid-column:span 12}
       .daily-grid,.radar-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.radar-intro{margin-left:0}
     }
     @media(max-width:760px){
@@ -141,7 +134,7 @@
       .hero-meta{gap:8px 11px}.hero-meta span::after{margin-left:11px}
       section{padding:58px 0;scroll-margin-top:92px}
       #about{padding-top:74px}#projects{padding-bottom:46px}#stack{padding-top:48px;padding-bottom:46px}#radar{padding-top:46px;padding-bottom:46px}#elsewhere{padding-top:46px}
-      .section-head{grid-template-columns:1fr;gap:12px}.bio,.interests,.project{grid-column:span 12}.links{grid-template-columns:1fr}
+      .section-head{grid-template-columns:1fr;gap:12px}.bio,.interests,.project,.project:first-child{grid-column:span 12}.links{grid-template-columns:1fr}
       footer{flex-direction:column;align-items:flex-start;gap:10px}
     }
     @media(max-width:560px){
@@ -149,7 +142,6 @@
       .nav-links{gap:1px}.nav-links a{font-size:12px;padding:7px 7px}.nav-links a:nth-child(1){display:none}
       .hero{padding-top:128px}h1{font-size:clamp(3rem,16vw,4.7rem)}.hero-copy{font-size:1rem}.hero-actions{margin-top:26px}.scroll-cue{margin-top:46px}
       .section-title{font-size:clamp(2.2rem,12vw,3.4rem)}.card{padding:22px}.bio,.interests,.project{min-height:0}
-      .project.featured{padding:0}.project-feature-copy{padding:22px}.project-shot{margin:0 10px 10px;border-radius:16px;aspect-ratio:16/11}
       .chips{grid-template-columns:repeat(2,max-content)}
       .daily-grid,.radar-grid{grid-template-columns:1fr}.tool-card,.radar-card{min-height:160px}.social{min-height:88px}
     }
@@ -208,17 +200,13 @@
         <h2 class="section-title" data-reveal="title" style="--delay:110ms">Small tools I built for myself.</h2>
       </div>
       <div class="project-grid">
-        <a class="card project featured" data-reveal="card" style="--delay:230ms" href="https://github.com/inchigor/crypto-portfolio" target="_blank" rel="noreferrer">
-          <div class="project-feature-copy">
-            <div><small>Open source · Local-first</small><h3>Crypto Portfolio</h3><p>Local-first crypto portfolio tracker with manual wallets, read-only EVM sync, allocation and portfolio history.</p></div>
-            <div class="arrow">↗</div>
-          </div>
-          <div class="project-shot"><img src="https://raw.githubusercontent.com/inchigor/crypto-portfolio/a67c8842a71da87c09b29157f258b0c7d125f3a6/docs/screenshot.png" alt="Crypto Portfolio dashboard screenshot" loading="lazy" decoding="async"></div>
+        <a class="card project" data-reveal="card" style="--delay:220ms" href="https://github.com/inchigor/crypto-portfolio" target="_blank" rel="noreferrer">
+          <div><small>Local-first tool</small><h3>Crypto Portfolio</h3><p>Local-first crypto portfolio tracker with manual wallets, read-only EVM sync, allocation and portfolio history.</p></div><div class="arrow">↗</div>
         </a>
-        <a class="card project" data-reveal="card" style="--delay:390ms" href="https://github.com/inchigor/post-editor" target="_blank" rel="noreferrer">
+        <a class="card project" data-reveal="card" style="--delay:330ms" href="https://github.com/inchigor/post-editor" target="_blank" rel="noreferrer">
           <div><small>Web tool</small><h3>Post Editor</h3><p>A lightweight browser editor for preparing social posts with emoji helpers, previews and local autosave.</p></div><div class="arrow">↗</div>
         </a>
-        <a class="card project" data-reveal="card" style="--delay:530ms" href="https://github.com/inchigor/ZwsCleanerTool" target="_blank" rel="noreferrer">
+        <a class="card project" data-reveal="card" style="--delay:440ms" href="https://github.com/inchigor/ZwsCleanerTool" target="_blank" rel="noreferrer">
           <div><small>Utility</small><h3>ZWS Cleaner Tool</h3><p>A tiny utility for cleaning invisible zero-width characters from text before they become someone else's debugging problem.</p></div><div class="arrow">↗</div>
         </a>
       </div>
