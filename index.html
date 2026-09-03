@@ -93,14 +93,18 @@
     .tool-card,.radar-card{min-height:188px;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;transition:transform .30s cubic-bezier(.16,.78,.2,1),border-color .28s ease,background .28s ease,box-shadow .28s ease}
     .tool-card:hover,.radar-card:hover{transform:translateY(-6px);border-color:rgba(154,177,255,.27);background:linear-gradient(180deg,rgba(102,124,255,.075),rgba(255,255,255,.022));box-shadow:0 26px 58px rgba(0,0,0,.15)}
     .tool-top,.radar-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
-    .tool-mark,.radar-mark{width:42px;height:42px;flex:0 0 auto;border-radius:13px;display:grid;place-items:center;color:#e7ecff;border:1px solid rgba(255,255,255,.11);background:linear-gradient(145deg,rgba(108,132,255,.18),rgba(166,97,255,.10));box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+    .tool-mark{width:42px;height:42px;flex:0 0 auto;border-radius:13px;display:grid;place-items:center;color:#e7ecff;border:1px solid rgba(255,255,255,.11);background:linear-gradient(145deg,rgba(108,132,255,.18),rgba(166,97,255,.10));box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
     .tool-mark svg{width:23px;height:23px;display:block;fill:currentColor}
     .tool-mark svg.stroke{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-    .mark-zen{color:#eef1ff}.mark-obscura{color:#b7c7dd}.mark-proton{color:#9582ff}.mark-searx{color:#8fc5ff}.mark-obsidian{color:#a78bfa}.mark-syncthing{color:#76c9ff}.mark-feather{color:#f0ad71}
-    .tool-type,.repo{display:block;color:#748096;text-transform:uppercase;letter-spacing:.13em;font-size:11px;margin-bottom:7px}
+    .mark-zen{color:#eef1ff}.mark-obscura{color:#b7c7dd}.mark-proton{color:#9582ff}.mark-searx{color:#8fc5ff}.mark-obsidian{color:#a78bfa}.mark-syncthing{color:#76c9ff}.mark-cake{color:#e6a6ff}.mark-ledger{color:#eef2f8}
+    .tool-type{display:block;color:#748096;text-transform:uppercase;letter-spacing:.13em;font-size:11px;margin-bottom:7px}
+    .repo{display:block;color:#748096;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:11px;letter-spacing:-.01em;margin-bottom:8px}
     .tool-card h3,.radar-card h3{margin:0;font-size:1.15rem}.tool-card p,.radar-card p{margin:18px 0 0;font-size:14px;line-height:1.55}
     .tool-arrow,.radar-arrow{color:#738097;font-size:1.15rem;transition:transform .24s ease,color .24s ease}.tool-card:hover .tool-arrow,.radar-card:hover .radar-arrow{transform:translate(4px,-4px);color:#d7dfef}
-    .radar-card{min-height:176px}.radar-mark{font-size:1.15rem;color:#c8d2e6}
+    .radar-card{min-height:176px}
+    .repo-mark{width:22px;height:22px;flex:0 0 auto;color:#7d899d;transition:transform .24s ease,color .24s ease}
+    .repo-mark svg{width:22px;height:22px;display:block;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+    .radar-card:hover .repo-mark{transform:translate(2px,-2px);color:#d7dfef}
     .radar-intro{margin:-8px 0 24px 182px;max-width:700px;color:#7f8b9e;font-size:14px;line-height:1.6}
 
     .links{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -234,13 +238,13 @@
           <div class="tool-top"><div><span class="tool-type">Sync</span><h3>Syncthing</h3></div><div class="tool-mark mark-syncthing" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm0 2.412c3.115 0 5.885 1.5 7.629 3.815a1.834 1.834 0 0 1 1.564 3.162c.23.818.354 1.68.354 2.57a9.504 9.504 0 0 1-2.166 6.05c.128.281.189.595.162.92a1.854 1.854 0 0 1-2.004 1.678 1.86 1.86 0 0 1-.877-.322A9.486 9.486 0 0 1 12 21.505c-3.84 0-7.154-2.277-8.668-5.552-.3-.01-.601-.092-.879-.254-.858-.51-1.144-1.634-.633-2.513.164-.276.39-.493.653-.643a9.62 9.62 0 0 1-.02-.584c0-5.265 4.282-9.547 9.547-9.547zm0 1.227a8.311 8.311 0 0 0-8.31 8.683c.22.036.439.111.644.23.323.2.564.484.713.805l6.984-.644a1.78 1.78 0 0 1 .787-1.08c.288-.19.612-.286.936-.295.34-.01.68.08.978.254l3.51-2.914a1.82 1.82 0 0 1 .317-1.84A8.3 8.3 0 0 0 12 3.638zm7.027 5.98-3.502 2.91a1.829 1.829 0 0 1-.23 1.719l1.904 2.744c.212-.06.436-.085.668-.066.238.024.46.092.66.193a8.285 8.285 0 0 0 1.793-5.16 8.38 8.38 0 0 0-.265-2.092 1.835 1.835 0 0 1-1.028-.248zm-6.886 4.315-6.975.644a1.8 1.8 0 0 1-.66 1.004A8.312 8.312 0 0 0 12 20.279a8.294 8.294 0 0 0 3.938-.986 1.845 1.845 0 0 1-.075-.69c.028-.341.148-.65.332-.908L14.29 14.95a1.839 1.839 0 0 1-2.148-1.015z"/></svg></div></div>
           <p>Device-to-device files, no cloud middleman.</p><span class="tool-arrow">↗</span>
         </a>
-        <a class="card tool-card" data-reveal="tool" style="--delay:320ms" href="https://phoenix.acinq.co/" target="_blank" rel="noreferrer">
-          <div class="tool-top"><div><span class="tool-type">Bitcoin</span><h3>Phoenix</h3></div><div class="tool-mark" aria-hidden="true"><svg viewBox="0 0 94 94"><path d="M23 74C16 73 14.63 64.49 22.16 38.87 28 19 39.18 19 51 19c15.17 0 23.61 3.18 25.79 9.73.453 1.153.6 2.405.424 3.632-.175 1.227-.666 2.388-1.424 3.368-.177.23-.371.448-.58.65 2.89 1.93 4.67 4.64 4.31 8.52-.39 4.36-3.36 6.65-8 7.76.329.736.493 1.534.48 2.34-.012 1.199-.305 2.378-.853 3.444-.549 1.066-1.339 1.989-2.307 2.696C63.09 65.76 53 68 39 66c-3-.43-5 2-7 4-2.38 2.38-4.76 4.61-9 4Z" fill="#50b338"/><path d="M51 23c8 0 20 1 22 7 2.24 6.71-11 6-21 5 9 1 24.18 2 23.5 9.5C75 50 65 50 48 49c8 1 20 2 20 6 0 6.28-16.26 9-27.33 7.31C32 61 31.06 69.77 24 68c-4-1-3-12 2-28 5.29-16.91 13.49-17 25-17Z" fill="#fff" stroke="#50b338" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-          <p>Self-custodial Lightning wallet.</p><span class="tool-arrow">↗</span>
+        <a class="card tool-card" data-reveal="tool" style="--delay:320ms" href="https://cakewallet.com/" target="_blank" rel="noreferrer">
+          <div class="tool-top"><div><span class="tool-type">Wallet</span><h3>Cake Wallet</h3></div><div class="tool-mark mark-cake" aria-hidden="true"><svg class="stroke" viewBox="0 0 24 24"><path d="M4 15h16l-2 5H6l-2-5Z"/><path d="M5.5 15c.7-4.7 3.4-8 6.5-8s5.8 3.3 6.5 8"/><path d="M9 8.2c.5-1.8 1.6-3.2 3-4.2 1.3 1 2.3 2.4 3 4.2"/><circle cx="12" cy="11.2" r="1"/></svg></div></div>
+          <p>Self-custody for Monero, Bitcoin and Lightning.</p><span class="tool-arrow">↗</span>
         </a>
-        <a class="card tool-card" data-reveal="tool" style="--delay:390ms" href="https://featherwallet.org/" target="_blank" rel="noreferrer">
-          <div class="tool-top"><div><span class="tool-type">Monero</span><h3>Feather</h3></div><div class="tool-mark mark-feather" aria-hidden="true"><svg class="stroke" viewBox="0 0 24 24"><path d="M20.2 12.2a6 6 0 0 0-8.5-8.5L5 10.5V19h8.5l6.7-6.8Z"/><path d="M16 8 2 22M17.5 15H9"/></svg></div></div>
-          <p>Monero wallet with Ledger support.</p><span class="tool-arrow">↗</span>
+        <a class="card tool-card" data-reveal="tool" style="--delay:390ms" href="https://www.ledger.com/" target="_blank" rel="noreferrer">
+          <div class="tool-top"><div><span class="tool-type">Hardware</span><h3>Ledger</h3></div><div class="tool-mark mark-ledger" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 3h7v3H6v4H3V3Zm11 0h7v7h-3V6h-4V3ZM3 14h3v4h4v3H3v-7Zm15 0h3v7h-7v-3h4v-4ZM8 8h8v8H8V8Z"/></svg></div></div>
+          <p>Hardware-backed keys for long-term self-custody.</p><span class="tool-arrow">↗</span>
         </a>
       </div>
     </section>
@@ -253,16 +257,16 @@
       <p class="radar-intro" data-reveal="radar" style="--delay:170ms">Open-source projects I am watching, testing or simply curious about right now.</p>
       <div class="radar-grid">
         <a class="card radar-card" data-reveal="radar" style="--delay:220ms" href="https://github.com/steipete/CodexBar" target="_blank" rel="noreferrer">
-          <div class="radar-top"><div><span class="repo">AI tooling</span><h3>CodexBar</h3></div><div class="radar-mark" aria-hidden="true">✦</div></div><p>Menu-bar usage stats for Codex and Claude Code.</p><span class="radar-arrow">↗</span>
+          <div class="radar-top"><div><span class="repo">steipete/CodexBar</span><h3>CodexBar</h3></div><div class="repo-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="9" r="2"/><circle cx="6" cy="19" r="2"/><path d="M6 7v10M8 7c4 0 4 4 8 4"/></svg></div></div><p>Menu-bar usage stats for Codex and Claude Code.</p><span class="radar-arrow">↗</span>
         </a>
-        <a class="card radar-card" data-reveal="radar" style="--delay:290ms" href="https://github.com/pietheinstrengholt/rssmonster" target="_blank" rel="noreferrer">
-          <div class="radar-top"><div><span class="repo">Self-hosted RSS</span><h3>rssmonster</h3></div><div class="radar-mark" aria-hidden="true">✦</div></div><p>A modern self-hosted RSS reader with search and smart organization.</p><span class="radar-arrow">↗</span>
+        <a class="card radar-card" data-reveal="radar" style="--delay:290ms" href="https://github.com/topgrade-rs/topgrade" target="_blank" rel="noreferrer">
+          <div class="radar-top"><div><span class="repo">topgrade-rs/topgrade</span><h3>topgrade</h3></div><div class="repo-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="9" r="2"/><circle cx="6" cy="19" r="2"/><path d="M6 7v10M8 7c4 0 4 4 8 4"/></svg></div></div><p>One command for keeping most of my toolchain up to date.</p><span class="radar-arrow">↗</span>
         </a>
-        <a class="card radar-card" data-reveal="radar" style="--delay:360ms" href="https://github.com/uncaughterrs/browsersync" target="_blank" rel="noreferrer">
-          <div class="radar-top"><div><span class="repo">Browser sync</span><h3>browsersync</h3></div><div class="radar-mark" aria-hidden="true">✦</div></div><p>Sync tooling for Zen, Helium and Brave.</p><span class="radar-arrow">↗</span>
+        <a class="card radar-card" data-reveal="radar" style="--delay:360ms" href="https://github.com/amnezia-vpn/amnezia-client" target="_blank" rel="noreferrer">
+          <div class="radar-top"><div><span class="repo">amnezia-vpn/amnezia-client</span><h3>amnezia-client</h3></div><div class="repo-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="9" r="2"/><circle cx="6" cy="19" r="2"/><path d="M6 7v10M8 7c4 0 4 4 8 4"/></svg></div></div><p>The open-source client behind my self-hosted VPN setup.</p><span class="radar-arrow">↗</span>
         </a>
-        <a class="card radar-card" data-reveal="radar" style="--delay:430ms" href="https://github.com/Antiz96/arch-update" target="_blank" rel="noreferrer">
-          <div class="radar-top"><div><span class="repo">Arch Linux</span><h3>arch-update</h3></div><div class="radar-mark" aria-hidden="true">✦</div></div><p>An interactive update notifier and helper for Arch Linux.</p><span class="radar-arrow">↗</span>
+        <a class="card radar-card" data-reveal="radar" style="--delay:430ms" href="https://github.com/ClusterM/wg-obfuscator" target="_blank" rel="noreferrer">
+          <div class="radar-top"><div><span class="repo">ClusterM/wg-obfuscator</span><h3>wg-obfuscator</h3></div><div class="repo-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="9" r="2"/><circle cx="6" cy="19" r="2"/><path d="M6 7v10M8 7c4 0 4 4 8 4"/></svg></div></div><p>Lightweight WireGuard obfuscation for restrictive networks.</p><span class="radar-arrow">↗</span>
         </a>
       </div>
     </section>
