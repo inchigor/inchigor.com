@@ -37,7 +37,7 @@
     .ambient {
       position: fixed;
       inset: -4vmax;
-      z-index: -3;
+      z-index: -5;
       overflow: hidden;
       pointer-events: none;
       transform: translate3d(var(--px), calc(var(--py) + var(--sy)), 0) scale(1.04);
@@ -73,7 +73,7 @@
     .grid {
       position: fixed;
       inset: 0;
-      z-index: -2;
+      z-index: -4;
       opacity: .13;
       background-image:
         linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
@@ -86,7 +86,7 @@
     .noise {
       position: fixed;
       inset: 0;
-      z-index: -1;
+      z-index: -3;
       opacity: .03;
       pointer-events: none;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
@@ -102,7 +102,7 @@
       top: 18px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 20;
+      z-index: 30;
       width: min(calc(100% - 28px), 720px);
       display: flex;
       justify-content: space-between;
@@ -110,7 +110,7 @@
       padding: 10px 12px 10px 18px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      background: rgba(8,10,14,.58);
+      background: rgba(8,10,14,.62);
       backdrop-filter: blur(18px) saturate(140%);
       box-shadow: 0 16px 50px rgba(0,0,0,.18);
       transition: width .28s ease, padding .28s ease, background .28s ease, box-shadow .28s ease;
@@ -119,7 +119,7 @@
     nav.compact {
       width: min(calc(100% - 28px), 650px);
       padding: 7px 10px 7px 16px;
-      background: rgba(8,10,14,.76);
+      background: rgba(8,10,14,.79);
       box-shadow: 0 12px 38px rgba(0,0,0,.28);
     }
 
@@ -146,16 +146,73 @@
     }
 
     .hero {
+      position: relative;
       min-height: 100svh;
       display: grid;
       place-items: center;
       padding: 126px 0 74px;
+      isolation: isolate;
+    }
+
+    .hero-media {
+      position: absolute;
+      z-index: -2;
+      top: 0;
+      left: 50%;
+      width: 100vw;
+      height: 100%;
+      transform: translateX(-50%);
+      overflow: hidden;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 18% 35%, rgba(83,83,220,.28), transparent 34%),
+        radial-gradient(circle at 82% 25%, rgba(132,70,208,.22), transparent 31%),
+        #080a0f;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0;
+      transform: scale(1.035);
+      filter: saturate(.78) brightness(.64) contrast(1.06);
+      transition: opacity 1.2s ease;
+    }
+
+    .hero-video.ready { opacity: .62; }
+
+    .hero-media::before,
+    .hero-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .hero-media::before {
+      background:
+        linear-gradient(90deg, rgba(5,7,11,.62) 0%, rgba(5,7,11,.25) 48%, rgba(5,7,11,.47) 100%),
+        radial-gradient(circle at 47% 48%, transparent 18%, rgba(5,7,11,.22) 72%);
+    }
+
+    .hero-media::after {
+      background: linear-gradient(180deg,
+        rgba(7,9,14,.22) 0%,
+        rgba(7,9,14,.08) 54%,
+        rgba(9,10,13,.58) 82%,
+        var(--bg) 100%);
     }
 
     .hero-inner {
       width: 100%;
       max-width: 900px;
       text-align: left;
+      position: relative;
+      z-index: 2;
     }
 
     h1 {
@@ -169,18 +226,20 @@
     }
 
     .gradient-text {
-      background: linear-gradient(100deg, #ffffff 8%, #cbd7ff 48%, #a992ff 95%);
+      background: linear-gradient(100deg, #ffffff 8%, #d7e0ff 48%, #b49aff 95%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      filter: drop-shadow(0 4px 24px rgba(0,0,0,.18));
     }
 
     .hero-copy {
       margin: 0;
       max-width: 700px;
-      color: var(--muted);
+      color: #b2bccb;
       font-size: clamp(1.05rem, 1.8vw, 1.24rem);
       line-height: 1.65;
+      text-shadow: 0 2px 18px rgba(0,0,0,.4);
     }
 
     .hero-meta {
@@ -188,14 +247,14 @@
       display: flex;
       flex-wrap: wrap;
       gap: 9px 14px;
-      color: #7f8a9d;
+      color: #929daf;
       font-size: 13px;
       letter-spacing: .02em;
     }
     .hero-meta span::after {
       content: "·";
       margin-left: 14px;
-      color: #566173;
+      color: #657083;
     }
     .hero-meta span:last-child::after { content: ""; margin: 0; }
 
@@ -215,22 +274,38 @@
       border-radius: 999px;
       text-decoration: none;
       color: #dfe6f3;
-      background: rgba(255,255,255,.035);
+      background: rgba(11,13,19,.48);
+      backdrop-filter: blur(10px);
       transition: transform .2s ease, background .2s ease, border-color .2s ease;
     }
     .btn:hover {
       transform: translateY(-2px);
-      background: rgba(255,255,255,.07);
-      border-color: rgba(255,255,255,.15);
+      background: rgba(255,255,255,.09);
+      border-color: rgba(255,255,255,.18);
     }
     .btn.primary { background: #eff3ff; color: #0a0c10; border-color: transparent; }
 
     .scroll-cue {
       margin-top: 56px;
-      color: #667286;
+      color: #778397;
       font-size: 12px;
       letter-spacing: .14em;
       text-transform: uppercase;
+    }
+
+    .intro {
+      opacity: 0;
+      transform: translateY(22px);
+      animation: intro-in .82s cubic-bezier(.2,.7,.2,1) forwards;
+    }
+    .intro.i1 { animation-delay: .08s; }
+    .intro.i2 { animation-delay: .18s; }
+    .intro.i3 { animation-delay: .29s; }
+    .intro.i4 { animation-delay: .40s; }
+    .intro.i5 { animation-delay: .54s; }
+
+    @keyframes intro-in {
+      to { opacity: 1; transform: none; }
     }
 
     section {
@@ -342,22 +417,14 @@
       border-color: rgba(154,177,255,.27);
       background: linear-gradient(180deg, rgba(102,124,255,.075), rgba(255,255,255,.02));
     }
-
-    .project:hover::before {
-      opacity: 1;
-      transform: translate3d(0,0,0);
-    }
+    .project:hover::before { opacity: 1; transform: translate3d(0,0,0); }
 
     .project .arrow {
       font-size: 1.4rem;
       color: #aab8d0;
       transition: transform .25s ease, color .25s ease;
     }
-
-    .project:hover .arrow {
-      transform: translate(4px,-4px);
-      color: #d6def1;
-    }
+    .project:hover .arrow { transform: translate(4px,-4px); color: #d6def1; }
 
     .project small {
       color: #748096;
@@ -390,7 +457,6 @@
       color: #738097;
       transition: transform .22s ease;
     }
-
     .social:hover span:last-child { transform: translate(3px,-3px); }
 
     footer {
@@ -409,15 +475,19 @@
 
     .reveal.pending {
       opacity: 0;
-      transform: translateY(28px) scale(.99);
+      transform: translateY(46px) scale(.985);
+      filter: blur(4px);
       transition:
-        opacity .72s cubic-bezier(.2,.7,.2,1),
-        transform .72s cubic-bezier(.2,.7,.2,1);
+        opacity .88s cubic-bezier(.2,.7,.2,1),
+        transform .88s cubic-bezier(.2,.7,.2,1),
+        filter .7s ease;
+      transition-delay: var(--delay, 0ms);
     }
 
     .reveal.pending.visible {
       opacity: 1;
       transform: none;
+      filter: blur(0);
     }
 
     @media (max-width: 900px) {
@@ -434,6 +504,11 @@
         min-height: auto;
         padding: 142px 0 92px;
       }
+
+      .hero-video {
+        filter: saturate(.72) brightness(.54) contrast(1.05);
+      }
+      .hero-video.ready { opacity: .40; }
 
       h1 {
         font-size: clamp(3.2rem, 15vw, 5.1rem);
@@ -458,9 +533,7 @@
 
       .bio,
       .stack,
-      .project {
-        grid-column: span 12;
-      }
+      .project { grid-column: span 12; }
 
       .links { grid-template-columns: 1fr; }
 
@@ -488,32 +561,26 @@
       .hero-actions { margin-top: 26px; }
       .scroll-cue { margin-top: 46px; }
 
-      .section-title {
-        font-size: clamp(2.2rem, 12vw, 3.4rem);
-      }
-
+      .section-title { font-size: clamp(2.2rem, 12vw, 3.4rem); }
       .card { padding: 22px; }
-      .bio,
-      .stack,
-      .project { min-height: 0; }
-
+      .bio, .stack, .project { min-height: 0; }
       .social { min-height: 88px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
+      *, *::before, *::after {
         scroll-behavior: auto !important;
         animation: none !important;
         transition-duration: .01ms !important;
       }
-
       .ambient { transform: none !important; }
+      .hero-video { display: none !important; }
+      .intro,
       .reveal,
       .reveal.pending {
         opacity: 1 !important;
         transform: none !important;
+        filter: none !important;
       }
     }
   </style>
@@ -537,39 +604,43 @@
 
   <main id="top">
     <header class="hero">
-      <div class="hero-inner">
-        <h1 class="gradient-text reveal">More control.<br>Less platform dependence.</h1>
+      <div class="hero-media" aria-hidden="true">
+        <video class="hero-video" muted loop playsinline preload="metadata"></video>
+      </div>
 
-        <p class="hero-copy reveal">
+      <div class="hero-inner">
+        <h1 class="gradient-text intro i1">More control.<br>Less platform dependence.</h1>
+
+        <p class="hero-copy intro i2">
           I work around Web3 and build small tools for things I actually use.
           The rest of the time I experiment with privacy, self-hosting and keeping
           more of my digital life under my own control.
         </p>
 
-        <div class="hero-meta reveal" aria-label="Interests">
+        <div class="hero-meta intro i3" aria-label="Interests">
           <span>Web3</span>
           <span>Privacy</span>
           <span>Self-hosting</span>
           <span>Open source</span>
         </div>
 
-        <div class="hero-actions reveal">
+        <div class="hero-actions intro i4">
           <a class="btn primary" href="#projects">Selected projects ↓</a>
           <a class="btn" href="https://github.com/inchigor" target="_blank" rel="noreferrer">GitHub ↗</a>
         </div>
 
-        <div class="scroll-cue reveal">scroll to explore</div>
+        <div class="scroll-cue intro i5">scroll to explore</div>
       </div>
     </header>
 
     <section id="about">
-      <div class="section-head reveal">
-        <div class="kicker">01 / About</div>
-        <h2 class="section-title">Useful systems I can understand, own and fix.</h2>
+      <div class="section-head">
+        <div class="kicker reveal" data-delay="0">01 / About</div>
+        <h2 class="section-title reveal" data-delay="100">Useful systems I can understand, own and fix.</h2>
       </div>
 
       <div class="about-grid">
-        <article class="card bio reveal">
+        <article class="card bio reveal" data-delay="170">
           <h3>What I do</h3>
           <p>
             I work around Web3 and communities. Outside work, I spend probably too much time
@@ -578,7 +649,7 @@
           </p>
         </article>
 
-        <article class="card stack reveal">
+        <article class="card stack reveal" data-delay="260">
           <h3>Things I care about</h3>
           <div class="chips">
             <span class="chip">Bitcoin</span>
@@ -595,13 +666,13 @@
     </section>
 
     <section id="projects">
-      <div class="section-head reveal">
-        <div class="kicker">02 / Projects</div>
-        <h2 class="section-title">Tools I actually use.</h2>
+      <div class="section-head">
+        <div class="kicker reveal" data-delay="0">02 / Projects</div>
+        <h2 class="section-title reveal" data-delay="100">Tools I actually use.</h2>
       </div>
 
       <div class="project-grid">
-        <a class="card project reveal" href="https://github.com/inchigor/post-editor" target="_blank" rel="noreferrer">
+        <a class="card project reveal" data-delay="170" href="https://github.com/inchigor/post-editor" target="_blank" rel="noreferrer">
           <div>
             <small>Web tool</small>
             <h3>Post Editor</h3>
@@ -610,7 +681,7 @@
           <div class="arrow">↗</div>
         </a>
 
-        <a class="card project reveal" href="https://github.com/inchigor/ZwsCleanerTool" target="_blank" rel="noreferrer">
+        <a class="card project reveal" data-delay="260" href="https://github.com/inchigor/ZwsCleanerTool" target="_blank" rel="noreferrer">
           <div>
             <small>Utility</small>
             <h3>ZWS Cleaner Tool</h3>
@@ -622,19 +693,19 @@
     </section>
 
     <section id="elsewhere">
-      <div class="section-head reveal">
-        <div class="kicker">03 / Elsewhere</div>
-        <h2 class="section-title">Other places where I leave traces.</h2>
+      <div class="section-head">
+        <div class="kicker reveal" data-delay="0">03 / Elsewhere</div>
+        <h2 class="section-title reveal" data-delay="100">Other places where I leave traces.</h2>
       </div>
 
       <div class="links">
-        <a class="card social reveal" href="https://github.com/inchigor" target="_blank" rel="noreferrer">
+        <a class="card social reveal" data-delay="170" href="https://github.com/inchigor" target="_blank" rel="noreferrer">
           <span>GitHub</span><span>↗</span>
         </a>
-        <a class="card social reveal" href="https://x.com/inchigor" target="_blank" rel="noreferrer">
+        <a class="card social reveal" data-delay="250" href="https://x.com/inchigor" target="_blank" rel="noreferrer">
           <span>X / Twitter</span><span>↗</span>
         </a>
-        <a class="card social reveal" href="https://t.me/inchigor" target="_blank" rel="noreferrer">
+        <a class="card social reveal" data-delay="330" href="https://t.me/inchigor" target="_blank" rel="noreferrer">
           <span>Telegram</span><span>↗</span>
         </a>
       </div>
@@ -650,6 +721,7 @@
     const root = document.documentElement;
     const nav = document.querySelector('nav');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const saveData = Boolean(navigator.connection && navigator.connection.saveData);
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -675,38 +747,48 @@
       }, { passive: true });
     }
 
+    const video = document.querySelector('.hero-video');
+    if (video && !reducedMotion && !saveData) {
+      video.src = '/assets/hero.mp4';
+      video.addEventListener('canplay', () => video.classList.add('ready'), { once: true });
+      video.addEventListener('error', () => video.remove());
+      video.load();
+      const play = video.play();
+      if (play && typeof play.catch === 'function') play.catch(() => {});
+    } else if (video) {
+      video.remove();
+    }
+
     const revealItems = [...document.querySelectorAll('.reveal')];
 
     if (!reducedMotion && 'IntersectionObserver' in window) {
       revealItems.forEach((item) => {
-        const rect = item.getBoundingClientRect();
-        if (rect.top > window.innerHeight * .72) {
-          item.classList.add('pending');
-        }
+        item.classList.add('pending');
+        item.style.setProperty('--delay', `${Number(item.dataset.delay || 0)}ms`);
       });
 
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            entry.target.classList.remove('pending');
             observer.unobserve(entry.target);
           }
         });
-      }, { threshold: .1, rootMargin: '0px 0px -24px 0px' });
-
-      document.querySelectorAll('.reveal.pending').forEach((item, index) => {
-        item.style.transitionDelay = `${Math.min(index % 3, 2) * 70}ms`;
-        observer.observe(item);
+      }, {
+        threshold: .14,
+        rootMargin: '0px 0px -8% 0px'
       });
 
-      // Never leave content hidden forever in screenshots or unusual browsing modes.
+      revealItems.forEach((item) => observer.observe(item));
+
+      // Safety fallback only for unusual modes: never keep content hidden forever.
       window.setTimeout(() => {
-        document.querySelectorAll('.reveal.pending').forEach((item) => {
-          item.classList.add('visible');
-          item.classList.remove('pending');
+        document.querySelectorAll('.reveal.pending:not(.visible)').forEach((item) => {
+          if (item.getBoundingClientRect().top < window.innerHeight * 1.15) {
+            item.classList.add('visible');
+          }
         });
-      }, 1600);
+      }, 5000);
     }
   </script>
 </body>
