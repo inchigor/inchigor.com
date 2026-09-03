@@ -5,14 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#090a0d">
-  <meta name="description" content="inchigor — privacy, self-hosting, crypto and small useful tools.">
+  <meta name="description" content="inchigor — Web3, privacy, self-hosting and small useful tools.">
   <title>inchigor</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <style>
     :root {
       --bg: #090a0d;
-      --panel: rgba(19, 22, 29, .66);
-      --panel-strong: rgba(15, 17, 22, .88);
       --text: #f3f6fb;
       --muted: #9da7b6;
       --line: rgba(255,255,255,.09);
@@ -20,12 +18,16 @@
       --accent-2: #9d7cff;
       --max: 1120px;
       --radius: 24px;
+      --px: 0px;
+      --py: 0px;
+      --sy: 0px;
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
+      min-height: 100%;
       color: var(--text);
       background: var(--bg);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -36,32 +38,37 @@
 
     .ambient {
       position: fixed;
-      inset: 0;
+      inset: -4vmax;
       z-index: -3;
       overflow: hidden;
+      pointer-events: none;
+      transform: translate3d(var(--px), calc(var(--py) + var(--sy)), 0) scale(1.04);
+      transition: transform .28s ease-out;
       background:
-        radial-gradient(circle at 18% 18%, rgba(77, 106, 255, .18), transparent 30%),
-        radial-gradient(circle at 80% 30%, rgba(154, 90, 255, .15), transparent 28%),
-        radial-gradient(circle at 60% 85%, rgba(27, 126, 255, .12), transparent 34%),
+        radial-gradient(circle at 18% 18%, rgba(77, 106, 255, .19), transparent 30%),
+        radial-gradient(circle at 80% 30%, rgba(154, 90, 255, .16), transparent 28%),
+        radial-gradient(circle at 60% 85%, rgba(27, 126, 255, .13), transparent 34%),
         linear-gradient(180deg, #0b0d12 0%, #08090c 55%, #0a0c10 100%);
     }
 
     .orb {
       position: absolute;
       width: 38vw;
+      min-width: 360px;
       aspect-ratio: 1;
       border-radius: 50%;
-      filter: blur(80px);
-      opacity: .28;
-      animation: drift 16s ease-in-out infinite alternate;
+      filter: blur(84px);
+      opacity: .27;
+      animation: drift 18s ease-in-out infinite alternate;
       background: linear-gradient(135deg, #4969ff, #a05dff);
+      will-change: transform;
     }
     .orb.one { left: -12vw; top: 12vh; }
     .orb.two {
       right: -15vw;
       top: 48vh;
       animation-delay: -7s;
-      animation-duration: 20s;
+      animation-duration: 22s;
       background: linear-gradient(135deg, #6a48ff, #2e8dff);
     }
 
@@ -69,12 +76,12 @@
       position: fixed;
       inset: 0;
       z-index: -2;
-      opacity: .16;
+      opacity: .14;
       background-image:
         linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
       background-size: 64px 64px;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), transparent 80%);
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), transparent 82%);
       pointer-events: none;
     }
 
@@ -82,7 +89,7 @@
       position: fixed;
       inset: 0;
       z-index: -1;
-      opacity: .035;
+      opacity: .032;
       pointer-events: none;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
     }
@@ -108,6 +115,13 @@
       background: rgba(8, 10, 14, .58);
       backdrop-filter: blur(18px) saturate(140%);
       box-shadow: 0 16px 50px rgba(0,0,0,.18);
+      transition: width .28s ease, padding .28s ease, background .28s ease, box-shadow .28s ease;
+    }
+    nav.compact {
+      width: min(calc(100% - 28px), 650px);
+      padding: 7px 10px 7px 16px;
+      background: rgba(8, 10, 14, .76);
+      box-shadow: 0 12px 38px rgba(0,0,0,.28);
     }
 
     .brand {
@@ -123,7 +137,7 @@
       font-size: 14px;
       padding: 8px 11px;
       border-radius: 999px;
-      transition: .2s ease;
+      transition: color .2s ease, background .2s ease;
     }
     .nav-links a:hover { color: var(--text); background: rgba(255,255,255,.06); }
 
@@ -133,11 +147,14 @@
       min-height: 100svh;
       display: grid;
       place-items: center;
-      text-align: center;
-      padding: 120px 0 72px;
+      padding: 132px 0 82px;
     }
 
-    .hero-inner { max-width: 900px; }
+    .hero-inner {
+      width: 100%;
+      max-width: 930px;
+      text-align: left;
+    }
 
     .eyebrow {
       display: inline-flex;
@@ -160,11 +177,13 @@
     }
 
     h1 {
-      margin: 24px 0 18px;
-      font-size: clamp(4.8rem, 15vw, 10.5rem);
-      line-height: .82;
-      letter-spacing: -.075em;
+      margin: 26px 0 24px;
+      max-width: 920px;
+      font-size: clamp(3.9rem, 8.4vw, 7.8rem);
+      line-height: .94;
+      letter-spacing: -.064em;
       font-weight: 760;
+      text-wrap: balance;
     }
 
     .gradient-text {
@@ -175,17 +194,32 @@
     }
 
     .hero-copy {
-      margin: 0 auto;
-      max-width: 690px;
+      margin: 0;
+      max-width: 720px;
       color: var(--muted);
-      font-size: clamp(1.05rem, 2.1vw, 1.35rem);
+      font-size: clamp(1.08rem, 2vw, 1.3rem);
       line-height: 1.65;
     }
 
-    .hero-actions {
-      margin-top: 30px;
+    .hero-meta {
+      margin-top: 18px;
       display: flex;
-      justify-content: center;
+      flex-wrap: wrap;
+      gap: 9px 14px;
+      color: #7f8a9d;
+      font-size: 13px;
+      letter-spacing: .02em;
+    }
+    .hero-meta span::after {
+      content: "·";
+      margin-left: 14px;
+      color: #566173;
+    }
+    .hero-meta span:last-child::after { content: ""; margin: 0; }
+
+    .hero-actions {
+      margin-top: 32px;
+      display: flex;
       flex-wrap: wrap;
       gap: 10px;
     }
@@ -206,20 +240,23 @@
     .btn.primary { background: #eff3ff; color: #0a0c10; border-color: transparent; }
 
     .scroll-cue {
-      margin-top: 62px;
-      color: #707b8d;
+      margin-top: 66px;
+      color: #667286;
       font-size: 12px;
       letter-spacing: .14em;
       text-transform: uppercase;
     }
 
-    section { padding: 100px 0; }
+    section {
+      padding: 78px 0;
+      scroll-margin-top: 104px;
+    }
 
     .section-head {
       display: grid;
-      grid-template-columns: 150px 1fr;
+      grid-template-columns: 150px minmax(0, 1fr);
       gap: 32px;
-      margin-bottom: 34px;
+      margin-bottom: 30px;
       align-items: start;
     }
     .kicker {
@@ -231,10 +268,11 @@
     }
     .section-title {
       margin: 0;
-      font-size: clamp(2rem, 5vw, 4.1rem);
-      line-height: 1.05;
-      letter-spacing: -.045em;
-      max-width: 760px;
+      font-size: clamp(2.4rem, 5.2vw, 4.5rem);
+      line-height: 1.02;
+      letter-spacing: -.05em;
+      max-width: 820px;
+      text-wrap: balance;
     }
 
     .about-grid, .project-grid {
@@ -252,9 +290,8 @@
       box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
     }
 
-    .bio { grid-column: span 7; min-height: 270px; }
+    .bio { grid-column: span 7; min-height: 235px; }
     .stack { grid-column: span 5; }
-    .wide { grid-column: span 12; }
 
     .card h3 {
       margin: 0 0 12px;
@@ -275,21 +312,38 @@
 
     .project {
       grid-column: span 6;
-      min-height: 260px;
+      min-height: 235px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       text-decoration: none;
       position: relative;
       overflow: hidden;
-      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+      isolation: isolate;
+      transition: transform .28s ease, border-color .28s ease, background .28s ease;
+    }
+    .project::before {
+      content: "";
+      position: absolute;
+      inset: -35%;
+      z-index: -1;
+      opacity: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(112,137,255,.17), transparent 42%);
+      transition: opacity .3s ease, transform .45s ease;
+      transform: translate3d(-4%, 5%, 0);
     }
     .project:hover {
       transform: translateY(-4px);
-      border-color: rgba(154, 177, 255, .26);
-      background: linear-gradient(180deg, rgba(102,124,255,.08), rgba(255,255,255,.02));
+      border-color: rgba(154, 177, 255, .27);
+      background: linear-gradient(180deg, rgba(102,124,255,.075), rgba(255,255,255,.02));
     }
-    .project .arrow { font-size: 1.4rem; color: #aab8d0; }
+    .project:hover::before { opacity: 1; transform: translate3d(0, 0, 0); }
+    .project .arrow {
+      font-size: 1.4rem;
+      color: #aab8d0;
+      transition: transform .25s ease, color .25s ease;
+    }
+    .project:hover .arrow { transform: translate(4px, -4px); color: #d6def1; }
     .project small { color: #748096; text-transform: uppercase; letter-spacing: .12em; }
 
     .links {
@@ -302,14 +356,19 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: 110px;
-      transition: transform .2s ease, border-color .2s ease;
+      min-height: 104px;
+      transition: transform .22s ease, border-color .22s ease, background .22s ease;
     }
-    .social:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.18); }
-    .social span:last-child { color: #738097; }
+    .social:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.045);
+    }
+    .social span:last-child { color: #738097; transition: transform .22s ease; }
+    .social:hover span:last-child { transform: translate(3px, -3px); }
 
     footer {
-      padding: 80px 0 44px;
+      padding: 62px 0 38px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -317,27 +376,30 @@
       font-size: 13px;
     }
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(34px) scale(.985);
-      transition: opacity .75s cubic-bezier(.2,.7,.2,1), transform .75s cubic-bezier(.2,.7,.2,1);
+    @media (max-width: 900px) {
+      h1 { font-size: clamp(3.6rem, 11vw, 6.7rem); }
+      .section-title { font-size: clamp(2.25rem, 7vw, 4rem); }
     }
-    .reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
 
     @media (max-width: 760px) {
       nav { top: 10px; }
+      nav.compact { width: min(calc(100% - 20px), 650px); }
       .nav-links a:nth-child(2) { display: none; }
-      h1 { font-size: clamp(4.4rem, 25vw, 7rem); }
+      .hero { min-height: auto; padding: 150px 0 105px; }
+      .hero-inner { text-align: left; }
+      h1 { font-size: clamp(3.35rem, 16vw, 5.5rem); line-height: .96; }
+      .hero-meta { gap: 8px 11px; }
+      .hero-meta span::after { margin-left: 11px; }
       .section-head { grid-template-columns: 1fr; gap: 12px; }
       .bio, .stack, .project { grid-column: span 12; }
       .links { grid-template-columns: 1fr; }
-      section { padding: 76px 0; }
+      section { padding: 62px 0; scroll-margin-top: 86px; }
       footer { flex-direction: column; align-items: flex-start; gap: 10px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition-duration: .01ms !important; }
-      .reveal { opacity: 1; transform: none; }
+      .ambient { transform: none !important; }
     }
   </style>
 </head>
@@ -349,7 +411,7 @@
   <div class="grid" aria-hidden="true"></div>
   <div class="noise" aria-hidden="true"></div>
 
-  <nav>
+  <nav id="nav">
     <a class="brand" href="#top">inchigor</a>
     <div class="nav-links">
       <a href="#about">About</a>
@@ -362,8 +424,11 @@
     <header class="hero">
       <div class="hero-inner">
         <div class="eyebrow reveal"><span class="dot"></span> personal corner of the internet</div>
-        <h1 class="gradient-text reveal">inchigor</h1>
-        <p class="hero-copy reveal">Support, privacy, self-hosting and crypto. I build small tools, run my own infrastructure and keep the parts of the internet I care about a little more under my control.</p>
+        <h1 class="gradient-text reveal">More control.<br>Less platform dependence.</h1>
+        <p class="hero-copy reveal">I work around Web3 and build small tools for things I actually use. The rest of the time I experiment with privacy, self-hosting and keeping more of my digital life under my own control.</p>
+        <div class="hero-meta reveal" aria-label="Topics">
+          <span>Web3</span><span>Privacy</span><span>Self-hosting</span><span>Open source</span>
+        </div>
         <div class="hero-actions reveal">
           <a class="btn primary" href="#projects">Selected projects ↓</a>
           <a class="btn" href="https://github.com/inchigor" target="_blank" rel="noreferrer">GitHub ↗</a>
@@ -375,13 +440,13 @@
     <section id="about">
       <div class="section-head reveal">
         <div class="kicker">01 / About</div>
-        <h2 class="section-title">Less platform dependence. More useful things that stay understandable.</h2>
+        <h2 class="section-title">Useful systems I can understand, own and fix.</h2>
       </div>
 
       <div class="about-grid">
         <article class="card bio reveal">
           <h3>What I do</h3>
-          <p>I work around Web3 support and communities, investigate technical cases, follow on-chain activity and turn recurring problems into clearer processes. Outside work I spend too much time on privacy, self-custody, open source and small self-hosted systems.</p>
+          <p>I work around Web3, support and communities. Outside work, I spend probably too much time experimenting with privacy, self-hosting, open source and small tools that make my digital life a little more mine.</p>
         </article>
 
         <article class="card stack reveal">
@@ -403,7 +468,7 @@
     <section id="projects">
       <div class="section-head reveal">
         <div class="kicker">02 / Projects</div>
-        <h2 class="section-title">Small tools that solved an actual problem first.</h2>
+        <h2 class="section-title">Tools I actually use.</h2>
       </div>
 
       <div class="project-grid">
@@ -449,19 +514,54 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    const nav = document.getElementById('nav');
+    const root = document.documentElement;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    document.querySelectorAll('.reveal').forEach((el, index) => {
-      el.style.transitionDelay = `${Math.min(index % 4, 3) * 70}ms`;
-      observer.observe(el);
-    });
+    function updateScrollEffects() {
+      const y = window.scrollY || 0;
+      nav.classList.toggle('compact', y > 70);
+      if (!reduceMotion) {
+        const shift = Math.max(-18, Math.min(18, y * -0.018));
+        root.style.setProperty('--sy', `${shift}px`);
+      }
+    }
+
+    updateScrollEffects();
+    window.addEventListener('scroll', updateScrollEffects, { passive: true });
+
+    if (!reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+      window.addEventListener('pointermove', (event) => {
+        const x = (event.clientX / window.innerWidth - .5) * 16;
+        const y = (event.clientY / window.innerHeight - .5) * 12;
+        root.style.setProperty('--px', `${x}px`);
+        root.style.setProperty('--py', `${y}px`);
+      }, { passive: true });
+    }
+
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const delay = Number(entry.target.dataset.delay || 0);
+          entry.target.animate([
+            { opacity: .2, transform: 'translateY(24px) scale(.99)' },
+            { opacity: 1, transform: 'translateY(0) scale(1)' }
+          ], {
+            duration: 650,
+            delay,
+            easing: 'cubic-bezier(.2,.7,.2,1)',
+            fill: 'both'
+          });
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: .12, rootMargin: '0px 0px -28px 0px' });
+
+      document.querySelectorAll('.reveal').forEach((el, index) => {
+        el.dataset.delay = String(Math.min(index % 3, 2) * 55);
+        observer.observe(el);
+      });
+    }
   </script>
 </body>
 </html>
