@@ -84,15 +84,10 @@
     .chips{display:grid;grid-template-columns:repeat(4,max-content);gap:9px;margin-top:18px}
     .chip{border:1px solid var(--line);border-radius:999px;padding:8px 11px;color:#c7d0dd;background:rgba(255,255,255,.025);font-size:13px}
 
-    .project{grid-column:span 6;min-height:250px;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;isolation:isolate;transition:transform .32s cubic-bezier(.16,.78,.2,1),border-color .3s ease,background .3s ease,box-shadow .3s ease}
+    .project{grid-column:span 6;min-height:220px;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;isolation:isolate;transition:transform .32s cubic-bezier(.16,.78,.2,1),border-color .3s ease,background .3s ease,box-shadow .3s ease}
     .project:hover{transform:translateY(-7px) scale(1.008);border-color:rgba(154,177,255,.30);background:linear-gradient(180deg,rgba(102,124,255,.090),rgba(255,255,255,.023));box-shadow:0 30px 64px rgba(0,0,0,.17)}
     .project .arrow{font-size:1.4rem;color:#aab8d0;transition:transform .28s ease,color .28s ease}.project:hover .arrow{transform:translate(5px,-5px);color:#e1e7f4}
     .project small{color:#748096;text-transform:uppercase;letter-spacing:.12em}
-    .project-tech{margin-top:18px;color:#7f8b9e;font-size:13px;letter-spacing:.02em}
-    .project-tech span{padding:0 7px;color:#59667a}
-    .project-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
-    .project-link{position:relative;z-index:2;display:inline-flex;align-items:center;padding:8px 11px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:#b9c5d8;background:rgba(255,255,255,.025);font-size:13px;transition:transform .2s ease,color .2s ease,background .2s ease,border-color .2s ease}
-    .project-link:hover{transform:translateY(-2px);color:#eef2fa;background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.20)}
 
     .daily-grid,.radar-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
     .tool-card,.radar-card{min-height:188px;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;transition:transform .30s cubic-bezier(.16,.78,.2,1),border-color .28s ease,background .28s ease,box-shadow .28s ease}
@@ -205,18 +200,9 @@
         <h2 class="section-title" data-reveal="title" style="--delay:110ms">Small tools I built for myself.</h2>
       </div>
       <div class="project-grid">
-        <article class="card project" data-reveal="card" style="--delay:220ms">
-          <div>
-            <small>macOS app</small>
-            <h3>Flow Notes</h3>
-            <p>Local-first macOS notes app with a chat-like flow for sending quick notes, reminders, and thoughts to yourself.</p>
-            <div class="project-tech" aria-label="Technology">Tauri<span>·</span>Rust<span>·</span>SQLite</div>
-          </div>
-          <div class="project-links">
-            <a class="project-link" href="https://github.com/inchigor/flow-notes" target="_blank" rel="noreferrer">GitHub ↗</a>
-            <a class="project-link" href="https://github.com/inchigor/flow-notes/releases/latest" target="_blank" rel="noreferrer">Latest Release ↗</a>
-          </div>
-        </article>
+        <a class="card project" data-reveal="card" style="--delay:220ms" href="https://github.com/inchigor/flow-notes" target="_blank" rel="noreferrer">
+          <div><small>macOS app</small><h3>Flow Notes</h3><p>Local-first macOS notes app with a chat-like flow for sending quick notes, reminders, and thoughts to yourself.</p></div><div class="arrow">↗</div>
+        </a>
         <a class="card project" data-reveal="card" style="--delay:330ms" href="https://github.com/inchigor/crypto-portfolio" target="_blank" rel="noreferrer">
           <div><small>Local-first tool</small><h3>Crypto Portfolio</h3><p>Local-first crypto portfolio tracker with manual wallets, read-only EVM sync, allocation and portfolio history.</p></div><div class="arrow">↗</div>
         </a>
