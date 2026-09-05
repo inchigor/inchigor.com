@@ -113,14 +113,15 @@
     .social span:last-child{color:#738097;transition:transform .25s ease,color .25s ease}.social:hover span:last-child{transform:translate(4px,-4px);color:#cfd8e8}
 
     .tip-section{padding:18px 0 8px}
-    .tip-card{padding:28px 30px}
+    .tip-card{padding:24px 30px}
     .tip-label{display:block;margin-bottom:7px;color:#748096;text-transform:uppercase;letter-spacing:.15em;font-size:11px}
     .tip-intro{max-width:680px}
     .tip-intro h3{margin:0 0 8px;font-size:1.45rem;letter-spacing:-.025em}
     .tip-intro p{margin:0;color:#8995a8;line-height:1.6;font-size:14px}
-    .tip-methods{margin-top:24px;border-top:1px solid var(--line)}
-    .tip-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;padding:17px 0;border-bottom:1px solid var(--line)}
-    .tip-row:last-child{border-bottom:0;padding-bottom:0}
+    .tip-methods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:20px;border-top:1px solid var(--line)}
+    .tip-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;padding:16px 0 0}
+    .tip-row:first-child{padding-right:20px}
+    .tip-row:last-child{padding-left:20px;border-left:1px solid var(--line)}
     .tip-method{display:flex;align-items:center;gap:13px;min-width:0}
     .tip-badge{width:39px;height:39px;flex:0 0 auto;border:1px solid var(--line);border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.025);color:#cbd5e5;font-size:11px;font-weight:700;letter-spacing:.04em}
     .tip-name{display:block;color:#dce3ee;font-size:13px;margin-bottom:4px}
@@ -163,7 +164,7 @@
       section{padding:58px 0;scroll-margin-top:92px}
       #about{padding-top:74px}#projects{padding-bottom:46px}#stack{padding-top:48px;padding-bottom:46px}#radar{padding-top:46px;padding-bottom:46px}#elsewhere{padding-top:46px}
       .section-head{grid-template-columns:1fr;gap:12px}.bio,.interests,.project{grid-column:span 12}.links{grid-template-columns:1fr}
-      .tip-card{padding:24px}.tip-row{grid-template-columns:1fr;gap:12px}.tip-actions{padding-left:52px}
+      .tip-card{padding:24px}.tip-methods{grid-template-columns:1fr}.tip-row{grid-template-columns:minmax(0,1fr) auto;gap:12px;padding:15px 0;border-bottom:1px solid var(--line)}.tip-row:first-child{padding-right:0}.tip-row:last-child{padding-left:0;border-left:0;border-bottom:0}.tip-actions{padding-left:0}
       footer{flex-direction:column;align-items:flex-start;gap:10px}
     }
     @media(max-width:560px){
@@ -173,7 +174,7 @@
       .section-title{font-size:clamp(2rem,10.5vw,3rem)}.card{padding:22px}.bio,.interests,.project{min-height:0}
       .chips{grid-template-columns:repeat(2,max-content)}
       .daily-grid,.radar-grid{grid-template-columns:1fr}.tool-card,.radar-card{min-height:160px}.social{min-height:88px}
-      .tip-section{padding-top:8px}.tip-card{padding:22px}.tip-actions{padding-left:0}.tip-address{font-size:11px}.tip-btn{padding:8px 10px}
+      .tip-section{padding-top:8px}.tip-card{padding:22px}.tip-row{grid-template-columns:1fr;gap:10px}.tip-actions{padding-left:52px}.tip-address{font-size:11px}.tip-btn{padding:8px 10px}
     }
     @media(prefers-reduced-motion:reduce){
       *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition-duration:.01ms!important}
