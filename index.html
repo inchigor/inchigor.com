@@ -111,7 +111,35 @@
     .social{text-decoration:none;display:flex;align-items:center;justify-content:space-between;min-height:100px;transition:transform .28s cubic-bezier(.16,.78,.2,1),border-color .25s ease,background .25s ease,box-shadow .25s ease}
     .social:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.20);background:rgba(255,255,255,.052);box-shadow:0 24px 54px rgba(0,0,0,.13)}
     .social span:last-child{color:#738097;transition:transform .25s ease,color .25s ease}.social:hover span:last-child{transform:translate(4px,-4px);color:#cfd8e8}
-    footer{padding:52px 0 36px;display:flex;align-items:center;justify-content:space-between;color:#697487;font-size:13px}
+
+    .tip-section{padding:18px 0 8px}
+    .tip-card{padding:28px 30px}
+    .tip-label{display:block;margin-bottom:7px;color:#748096;text-transform:uppercase;letter-spacing:.15em;font-size:11px}
+    .tip-intro{max-width:680px}
+    .tip-intro h3{margin:0 0 8px;font-size:1.45rem;letter-spacing:-.025em}
+    .tip-intro p{margin:0;color:#8995a8;line-height:1.6;font-size:14px}
+    .tip-methods{margin-top:24px;border-top:1px solid var(--line)}
+    .tip-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;padding:17px 0;border-bottom:1px solid var(--line)}
+    .tip-row:last-child{border-bottom:0;padding-bottom:0}
+    .tip-method{display:flex;align-items:center;gap:13px;min-width:0}
+    .tip-badge{width:39px;height:39px;flex:0 0 auto;border:1px solid var(--line);border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.025);color:#cbd5e5;font-size:11px;font-weight:700;letter-spacing:.04em}
+    .tip-name{display:block;color:#dce3ee;font-size:13px;margin-bottom:4px}
+    .tip-address{display:block;max-width:650px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#8692a5;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px}
+    .tip-actions{display:flex;gap:8px}
+    .tip-btn{appearance:none;border:1px solid var(--line);border-radius:999px;padding:8px 11px;background:rgba(255,255,255,.025);color:#bcc7d8;font:inherit;font-size:12px;cursor:pointer;transition:transform .2s ease,color .2s ease,background .2s ease,border-color .2s ease}
+    .tip-btn:hover{transform:translateY(-2px);color:#eef2fa;background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.20)}
+    .qr-modal{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;background:rgba(3,5,9,.72);backdrop-filter:blur(14px);opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease}
+    .qr-modal.open{opacity:1;visibility:visible}
+    .qr-dialog{width:min(100%,390px);border:1px solid rgba(255,255,255,.13);border-radius:26px;background:#11141a;padding:22px;box-shadow:0 28px 90px rgba(0,0,0,.48)}
+    .qr-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}
+    .qr-head span{display:block;color:#778499;text-transform:uppercase;letter-spacing:.14em;font-size:10px;margin-bottom:5px}
+    .qr-head h3{margin:0;font-size:1.25rem}
+    .qr-close{width:34px;height:34px;flex:0 0 auto;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.035);color:#aeb9ca;font-size:20px;line-height:1;cursor:pointer}
+    .qr-code{width:min(100%,300px);margin:0 auto}
+    .qr-code img{display:block;width:100%;height:auto;border-radius:18px}
+    .qr-address{margin:17px 0 0;color:#909caf;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px;line-height:1.55;text-align:center;overflow-wrap:anywhere}
+    .qr-note{margin:10px 0 0;color:#667287;font-size:11px;text-align:center}
+    footer{padding:44px 0 36px;display:flex;align-items:center;justify-content:space-between;color:#697487;font-size:13px}
 
     [data-reveal]{opacity:1;transform:none;filter:none}
     .motion [data-reveal]{opacity:0;transition-delay:var(--delay,0ms);will-change:transform,opacity,filter}
@@ -135,6 +163,7 @@
       section{padding:58px 0;scroll-margin-top:92px}
       #about{padding-top:74px}#projects{padding-bottom:46px}#stack{padding-top:48px;padding-bottom:46px}#radar{padding-top:46px;padding-bottom:46px}#elsewhere{padding-top:46px}
       .section-head{grid-template-columns:1fr;gap:12px}.bio,.interests,.project{grid-column:span 12}.links{grid-template-columns:1fr}
+      .tip-card{padding:24px}.tip-row{grid-template-columns:1fr;gap:12px}.tip-actions{padding-left:52px}
       footer{flex-direction:column;align-items:flex-start;gap:10px}
     }
     @media(max-width:560px){
@@ -144,6 +173,7 @@
       .section-title{font-size:clamp(2rem,10.5vw,3rem)}.card{padding:22px}.bio,.interests,.project{min-height:0}
       .chips{grid-template-columns:repeat(2,max-content)}
       .daily-grid,.radar-grid{grid-template-columns:1fr}.tool-card,.radar-card{min-height:160px}.social{min-height:88px}
+      .tip-section{padding-top:8px}.tip-card{padding:22px}.tip-actions{padding-left:0}.tip-address{font-size:11px}.tip-btn{padding:8px 10px}
     }
     @media(prefers-reduced-motion:reduce){
       *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition-duration:.01ms!important}
@@ -290,8 +320,57 @@
       </div>
     </section>
 
+
+    <section class="tip-section" aria-labelledby="tip-title">
+      <article class="card tip-card" data-reveal="card" style="--delay:180ms">
+        <div class="tip-intro">
+          <span class="tip-label">Tip jar</span>
+          <h3 id="tip-title">Fuel for future sats drops.</h3>
+          <p>Tips are optional. Anything sent here may find its way back into future drops.</p>
+        </div>
+        <div class="tip-methods">
+          <div class="tip-row">
+            <div class="tip-method">
+              <span class="tip-badge" aria-hidden="true">LN</span>
+              <div><span class="tip-name">Lightning</span><span class="tip-address">igor@cake.cash</span></div>
+            </div>
+            <div class="tip-actions">
+              <button class="tip-btn" type="button" data-copy="igor@cake.cash">Copy</button>
+              <button class="tip-btn" type="button" data-qr="lightning">Show QR</button>
+            </div>
+          </div>
+          <div class="tip-row">
+            <div class="tip-method">
+              <span class="tip-badge" aria-hidden="true">XMR</span>
+              <div><span class="tip-name">Monero</span><span class="tip-address" title="82zyBcrgFjtTrVGve9YJ7x74aikYK3y7qPxmRqAr2vmfeYhscTJiwJRA8nSwV49ubJdjg6Kj5wUV5W4qKSJrLRKxQvf3aHV">82zyBc…f3aHV</span></div>
+            </div>
+            <div class="tip-actions">
+              <button class="tip-btn" type="button" data-copy="82zyBcrgFjtTrVGve9YJ7x74aikYK3y7qPxmRqAr2vmfeYhscTJiwJRA8nSwV49ubJdjg6Kj5wUV5W4qKSJrLRKxQvf3aHV">Copy</button>
+              <button class="tip-btn" type="button" data-qr="monero">Show QR</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
     <footer><span>© <span id="year"></span> inchigor</span><span>Built without a framework, analytics or trackers.</span></footer>
   </main>
+
+
+  <div class="qr-modal" id="qr-modal" aria-hidden="true">
+    <div class="qr-dialog" role="dialog" aria-modal="true" aria-labelledby="qr-title">
+      <div class="qr-head">
+        <div><span>Tip jar</span><h3 id="qr-title">QR code</h3></div>
+        <button class="qr-close" id="qr-close" type="button" aria-label="Close QR code">×</button>
+      </div>
+      <div class="qr-code" id="qr-code">
+        <div data-qr-code="lightning" hidden><img src="/assets/lightning-cake-qr.png" alt="Lightning QR code from Cake Wallet"></div>
+        <div data-qr-code="monero" hidden><img src="/assets/monero-cake-qr.png" alt="Monero QR code from Cake Wallet"></div>
+      </div>
+      <p class="qr-address" id="qr-address"></p>
+      <p class="qr-note" id="qr-note"></p>
+    </div>
+  </div>
 
   <script>
     const root=document.documentElement,nav=document.querySelector('nav'),reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -308,6 +387,33 @@
       const observer=new IntersectionObserver((entries)=>entries.forEach((entry)=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.14,rootMargin:'0px 0px -12% 0px'});
       items.forEach((item)=>observer.observe(item));
     }else items.forEach((item)=>item.classList.add('visible'));
+
+    const copyText=async(text)=>{
+      try{await navigator.clipboard.writeText(text);return true}catch(_){
+        const area=document.createElement('textarea');area.value=text;area.style.position='fixed';area.style.opacity='0';document.body.appendChild(area);area.select();
+        const ok=document.execCommand('copy');area.remove();return ok
+      }
+    };
+    document.querySelectorAll('[data-copy]').forEach((button)=>button.addEventListener('click',async()=>{
+      const original=button.textContent;
+      if(await copyText(button.dataset.copy)){button.textContent='Copied';setTimeout(()=>button.textContent=original,1400)}
+    }));
+
+    const qrModal=document.getElementById('qr-modal'),qrTitle=document.getElementById('qr-title'),qrAddress=document.getElementById('qr-address'),qrNote=document.getElementById('qr-note'),qrClose=document.getElementById('qr-close');
+    const qrData={
+      lightning:{title:'Lightning',address:'igor@cake.cash',note:'LNURL-pay QR'},
+      monero:{title:'Monero',address:'82zyBcrgFjtTrVGve9YJ7x74aikYK3y7qPxmRqAr2vmfeYhscTJiwJRA8nSwV49ubJdjg6Kj5wUV5W4qKSJrLRKxQvf3aHV',note:'Public tip subaddress'}
+    };
+    const closeQr=()=>{qrModal.classList.remove('open');qrModal.setAttribute('aria-hidden','true');document.body.style.overflow=''};
+    document.querySelectorAll('[data-qr]').forEach((button)=>button.addEventListener('click',()=>{
+      const key=button.dataset.qr,data=qrData[key];
+      document.querySelectorAll('[data-qr-code]').forEach((code)=>code.hidden=code.dataset.qrCode!==key);
+      qrTitle.textContent=data.title;qrAddress.textContent=data.address;qrNote.textContent=data.note;
+      qrModal.classList.add('open');qrModal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';qrClose.focus()
+    }));
+    qrClose.addEventListener('click',closeQr);
+    qrModal.addEventListener('click',(e)=>{if(e.target===qrModal)closeQr()});
+    window.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&qrModal.classList.contains('open'))closeQr()});
   </script>
 </body>
 </html>
